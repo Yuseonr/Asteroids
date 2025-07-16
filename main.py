@@ -1,6 +1,7 @@
 # 16 July 2025
 
 import pygame
+import sys
 from constants import *
 from player import Player
 from asteroid import Asteroid
@@ -39,18 +40,17 @@ def main():
         for drawing in drawable :
             drawing.draw(screen)
         
+        for asteroid in asteroids :
+           if asteroid.collisions(player) :
+               print("GAME OVER!")
+               sys.exit()
+        
         pygame.display.flip()
         
 
         # Limit Frame rate to 60 FPS
         dt = clock.tick(60)/1000
         
-
-
-    print("Starting Asteroids!")
-    print(f"Screen width: {SCREEN_WIDTH}")
-    print(f"Screen height: {SCREEN_HEIGHT}")
-
 
 if __name__ == "__main__":
     main()
