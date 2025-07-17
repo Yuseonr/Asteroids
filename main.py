@@ -7,6 +7,7 @@ from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from shot import Shot
+from score import Score
 
 
 def main():
@@ -24,9 +25,11 @@ def main():
     Asteroid.containers = (updateable, drawable, asteroids)
     AsteroidField.containers = (updateable)
     Shot.containers = (updateable, drawable, shots)
+    
 
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
     asteroidfield = AsteroidField()
+    score = Score()
 
     while True : 
         # Close Program
@@ -38,7 +41,10 @@ def main():
 
         # Screen Fill
 
+
         screen.fill('Black')
+
+        score.show(screen)
 
         for obj in drawable :
             obj.draw(screen)
@@ -48,6 +54,7 @@ def main():
                 if asteroid.collisions(shot):
                     asteroid.split()
                     shot.kill()
+                    score.update(screen)
 
            if asteroid.collisions(player) :
                print("GAME OVER!")
