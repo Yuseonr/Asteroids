@@ -3,7 +3,7 @@
 
 import pygame
 from circleshape import CircleShape
-from constants import ASTEROID_KINDS, ASTEROID_MAX_RADIUS, ASTEROID_MIN_RADIUS,ASTEROID_SPAWN_RATE
+
 
 class Asteroid(CircleShape):
     def __init__(self, x, y, radius):
