@@ -3,7 +3,7 @@
 
 import pygame
 from circleshape import CircleShape
-from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED
+from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_SPEED, PLAYER_SHOOT_SPEED, PLAYER_SHOOT_COOLDOWN
 from shot import Shot
 
 class Player(CircleShape):
@@ -11,6 +11,7 @@ class Player(CircleShape):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.speed_mode = 1
+        self.timer = 0
 
     # Draw Triangel
 
@@ -43,9 +44,12 @@ class Player(CircleShape):
             self.speed_mode = 2
         if keys[pygame.K_3]:
             self.speed_mode = 3
-        
-        if keys[pygame.K_SPACE]:
+
+        self.timer-=dt
+        if keys[pygame.K_SPACE] and self.timer <= 0:
+            self.timer = PLAYER_SHOOT_COOLDOWN
             self.shoot()
+            
 
     def rotate(self, dt):
         self.rotation += PLAYER_TURN_SPEED*dt
