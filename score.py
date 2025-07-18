@@ -1,6 +1,6 @@
 
 import pygame
-from circleshape import CircleShape
+from constants import SCORE_INCREMENT
 
 class Score():
     def __init__(self, size = 24, font=None):
@@ -9,10 +9,9 @@ class Score():
         self.score = 0
 
     def show(self,screen) :
-        text = self.font.render(f"Score : {self.score}", True, 'White')
+        text = self.font.render(f"Score : {self.score}",True,'White' )
         screen.blit(text, (10,10))
         
-    def update(self,screen):
-        self.score += 10
-        self.show(screen)
+    def add_score(self, Asteroidkind):
+        self.score += (SCORE_INCREMENT * Asteroidkind)
 
