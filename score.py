@@ -1,16 +1,15 @@
 
 import pygame
 from constants import SCORE_INCREMENT
+from writetext import Text
 
-class Score():
-    def __init__(self, size = 24, font=None):
-        self.size = size
-        self.font = pygame.font.SysFont(font, size)
+class Score(Text):
+    def __init__(self, size=24, font=None):
+        super().__init__(size, font)
         self.score = 0
-
-    def show(self,screen) :
-        text = self.font.render(f"Score : {self.score}",True,'White' )
-        screen.blit(text, (10,10))
+        
+    def write(self,screen) :
+        super().write(screen,f"Score : {self.score}",10,10)
         
     def add_score(self, Asteroidkind):
         self.score += (SCORE_INCREMENT * Asteroidkind)

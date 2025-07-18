@@ -7,6 +7,7 @@ from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from shot import Shot
 from score import Score
+from writetext import Text
 
 
 def main():
@@ -28,6 +29,7 @@ def main():
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
     asteroidfield = AsteroidField()
     score = Score()
+    Start_msg = Text(48)
 
     while True : 
         # Close Program
@@ -53,7 +55,9 @@ def main():
 
         screen.fill('Black')
 
-        score.show(screen)
+        score.write(screen)
+        Start_msg.write(screen, "THIS IS ASTEROID", 500, 500)
+
         for obj in drawable :
             obj.draw(screen)
         
