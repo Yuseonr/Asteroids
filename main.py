@@ -1,12 +1,12 @@
-# 16 July 2025
 
 import pygame
 import sys
-from constants import *
+from constants import SCREEN_HEIGHT, SCREEN_WIDTH
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from shot import Shot
+from score import Score
 
 
 def main():
@@ -24,37 +24,40 @@ def main():
     Asteroid.containers = (updateable, drawable, asteroids)
     AsteroidField.containers = (updateable)
     Shot.containers = (updateable, drawable, shots)
-
+    
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
     asteroidfield = AsteroidField()
+    score = Score()
 
     while True : 
         # Close Program
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-            
+
+        # Update and check for value    
         updateable.update(dt)
-
-        # Screen Fill
-
-        screen.fill('Black')
-
-        for obj in drawable :
-            obj.draw(screen)
         
         for asteroid in asteroids :
            for shot in shots:
                 if asteroid.collisions(shot):
                     asteroid.split()
                     shot.kill()
+                    score.add_score(asteroid.kind)
 
            if asteroid.collisions(player) :
                print("GAME OVER!")
                sys.exit()
         
-        pygame.display.flip()
+        # Screen Fill 
+
+        screen.fill('Black')
+
+        score.show(screen)
+        for obj in drawable :
+            obj.draw(screen)
         
+        pygame.display.flip()
 
         # Limit Frame rate to 60 FPS
         dt = clock.tick(60)/1000
