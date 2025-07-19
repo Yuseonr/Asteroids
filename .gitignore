@@ -3,3 +3,9 @@ __pycache__
 
 # Ignore .venv
 .venv
+
+# Ignore DS
+.DS_Store
+
+# Ignore RM
+README.md

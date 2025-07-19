@@ -8,6 +8,8 @@ from asteroidfield import AsteroidField
 from shot import Shot
 from score import Score
 from writetext import Text
+from button import Button
+
 
 
 def main():
@@ -30,15 +32,31 @@ def main():
     asteroidfield = AsteroidField()
     score = Score()
     Start_msg = Text(48)
+    Pause_msg = Text(48)
+
+
+    #-----------------------#
+    resume_img = pygame.image.load('Asteroids/Assets/CONTINUE.png').convert_alpha()
+
+    resume_button = Button(490,260,resume_img,1)
+    game_paused = False
 
     while True : 
+
+        # if Game is Paused 
+        
+
         # Close Program
         for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                     game_paused = not game_paused
             if event.type == pygame.QUIT:
                 return
+           
 
         # Update and check for value    
-        updateable.update(dt)
+       
         
         for asteroid in asteroids :
            for shot in shots:
@@ -54,6 +72,12 @@ def main():
         # Screen Fill 
 
         screen.fill('Black')
+
+        if game_paused == True :
+            if resume_button.draw(screen) :
+                game_paused = False
+        else :
+            updateable.update(dt)
 
         score.write(screen)
         Start_msg.write(screen, "THIS IS ASTEROID", 500, 500)
