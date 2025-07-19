@@ -31,22 +31,21 @@ def main():
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
     asteroidfield = AsteroidField()
     score = Score()
-    Start_msg = Text(48)
-    Pause_msg = Text(48)
+    Start_msg = Text(30)
 
 
     #-----------------------#
     resume_img = pygame.image.load('Asteroids/Assets/CONTINUE.png').convert_alpha()
+    quit_img = pygame.image.load('Asteroids/Assets/Quit.png').convert_alpha()
 
     resume_button = Button(490,260,resume_img,1)
+    quit_button = Button(490, 360, quit_img, 1)
+
     game_paused = False
 
     while True : 
-
-        # if Game is Paused 
         
-
-        # Close Program
+        # Close Program / Pause Program
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
@@ -54,9 +53,7 @@ def main():
             if event.type == pygame.QUIT:
                 return
            
-
         # Update and check for value    
-       
         
         for asteroid in asteroids :
            for shot in shots:
@@ -70,17 +67,22 @@ def main():
                sys.exit()
         
         # Screen Fill 
-
         screen.fill('Black')
 
+        # if Game is Paused 
         if game_paused == True :
             if resume_button.draw(screen) :
                 game_paused = False
+            if quit_button.draw(screen):
+                return
         else :
             updateable.update(dt)
+        
+        # Screen Draw
 
         score.write(screen)
-        Start_msg.write(screen, "THIS IS ASTEROID", 500, 500)
+        Start_msg.write(screen, "ASTEROID", 585, 600)
+        Start_msg.write(screen, "Press [Return] to pause", 535, 640)
 
         for obj in drawable :
             obj.draw(screen)
